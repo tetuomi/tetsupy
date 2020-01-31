@@ -1,0 +1,4 @@
+main/__pycache__/
+main/models/__pycache__/
+test/
+venv/

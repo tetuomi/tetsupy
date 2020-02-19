@@ -45,7 +45,7 @@ def handle_message(event):
 
             line_bot_api.reply_message(event.reply_token, image_message)
 
-        elif event.message.text == "画像":
+        elif event.message.text == "動画":
             main_video_path = "static/videos/hina.MP4"
             preview_video_path = "static/videos/hina.MP4"
 

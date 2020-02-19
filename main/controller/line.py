@@ -1,6 +1,6 @@
 from main import (app, db, request, abort,line_bot_api, handler, owner_id)
 from linebot.exceptions import (InvalidSignatureError)
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage, FollowEvent)
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, FollowEvent)
 import os
 from main.models.user import User
 
@@ -33,6 +33,27 @@ def handle_message(event):
                 messages.append(TextSendMessage(content.content))
 
             line_bot_api.reply_message(event.reply_token, messages[-5:])
+
+        elif event.message.text == "画像":
+            main_image_path = "static/images/hina.jpg"
+            preview_image_path = "static/images/hina.jpg"
+
+            image_message = ImageSendMessage(
+                original_content_url=f"https://tetsupy.herokuapp.com/{main_image_path}",
+                preview_image_url=f"https://tetsupy.herokuapp.com/{preview_image_path}",
+            )
+
+            line_bot_api.reply_message(event.reply_token, image_message)
+
+        elif event.message.text == "画像":
+            main_video_path = "static/videos/hina.MP4"
+            preview_video_path = "static/videos/hina.MP4"
+
+            video_message = VideoSendMessage(
+                original_content_url=f"https://tetsupy.herokuapp.com/{main_video_path}",
+                preview_image_url=f"https://tetsupy.herokuapp.com/{preview_video_path}",
+            )
+            line_bot_api.reply_message(event.reply_token, video_message)
             
         else:
             #データベースに追加

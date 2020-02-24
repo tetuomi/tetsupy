@@ -3,7 +3,7 @@ from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, FollowEvent, ImageMessage)
 import os
 from main.models.user import User
-import cv2
+#import cv2
 from pathlib import Path
 
 @app.route("/callback", methods=['POST'])

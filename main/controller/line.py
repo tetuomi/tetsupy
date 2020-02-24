@@ -1,8 +1,9 @@
 from main import (app, db, request, abort,line_bot_api, handler, owner_id)
 from linebot.exceptions import (InvalidSignatureError)
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, FollowEvent)
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, FollowEvent, ImageMessage)
 import os
 from main.models.user import User
+import cv2
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -62,6 +63,26 @@ def handle_message(event):
             db.session.commit()
         
             line_bot_api.reply_message(event.reply_token,TextSendMessage("記憶しました"))
+
+
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_image(event):
+    message_content = line_bot_api.get_message_content(event.message.id)
+    file_path = f"static/images/{event.message.id}.jpg"
+    with open(file_path, 'wb') as fd:
+        for chunk in message_content.iter_content():
+            fd.write(chunk)
+
+    main_image_path = f"static/images/{event.message.id}.jpg"
+    preview_video_path = f"static/images/{event.message.id}.jpg"
+
+    image_message = ImageSendMessage(
+        original_content_url=f"https://tetsupy.herokuapp.com/{main_image_path}",
+        preview_image_url=f"https://tetsupy.herokuapp.com/{preview_image_path}",
+    )
+
+    line_bot_api.reply_message(event.reply_token, image_message)
+
 
 @handler.add(FollowEvent)
 def handle_follow(event):

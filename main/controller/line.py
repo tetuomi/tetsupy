@@ -75,7 +75,7 @@ def handle_image(event):
             fd.write(chunk)
 
     main_image_path = f"static/images/{event.message.id}.jpg"
-    preview_video_path = f"static/images/{event.message.id}.jpg"
+    preview_image_path = f"static/images/{event.message.id}.jpg"
 
     image_message = ImageSendMessage(
         original_content_url=f"https://tetsupy.herokuapp.com/{main_image_path}",

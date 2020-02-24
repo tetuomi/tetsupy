@@ -69,7 +69,7 @@ def handle_message(event):
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
     message_content = line_bot_api.get_message_content(event.message.id)
-    file_path = f"static/images/{event.message.id}.jpg"
+    file_path = f"main/static/images/{event.message.id}.jpg"
     with open(Path(file_path).absolute(), 'wb') as fd:
         for chunk in message_content.iter_content():
             fd.write(chunk)

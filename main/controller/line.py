@@ -4,6 +4,7 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageSen
 import os
 from main.models.user import User
 import cv2
+from pathlib import Path
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -69,7 +70,7 @@ def handle_message(event):
 def handle_image(event):
     message_content = line_bot_api.get_message_content(event.message.id)
     file_path = f"static/images/{event.message.id}.jpg"
-    with open(file_path, 'wb') as fd:
+    with open(Path(file_path).absolute(), 'wb') as fd:
         for chunk in message_content.iter_content():
             fd.write(chunk)
 
